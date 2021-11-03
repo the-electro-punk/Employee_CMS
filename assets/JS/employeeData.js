@@ -1,5 +1,5 @@
 const Employees = require('..employees')
-// const sequelize = require(../folder/filename.js)
+const sequelize = require('../mySQL-connect.js')
 
 const employeeData = [
     {
