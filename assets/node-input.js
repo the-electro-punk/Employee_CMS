@@ -6,6 +6,7 @@ const mysql = require('mysql')
 
 const app = express();
 
+// this connects the JS code to the database
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -16,18 +17,18 @@ var connection = mysql.createConnection({
 
 inquirer.prompt(
     [
-        // {
-        // // // asks for filename; didn't know how to use ONLY at start so must input for every employee entered
-        // type: 'input', 
-        // name:"input_name", 
-        // message:'what is filename.html?',
-        // validate: (answer) => {
-        //     if(answer === '') {
-        //         return 'please enter a valid name'
-        //     }
-        //         return true
-        //     }
-        // },
+        {
+        // asks for the name of the table for which the data will be submitted
+        type: 'input', 
+        name:"input_name", 
+        message:'what is table name?',
+        validate: (answer) => {
+            if(answer === '') {
+                return 'please enter a valid name'
+            }
+                return true
+            }
+        },
         {
             type:'input',
             name: 'ID_question',
@@ -75,9 +76,9 @@ inquirer.prompt(
         
     ]
 ).then(answers => { 
-    
+    // this converts the answers submitted into variables
     console.log('answers are ', answers) 
-    // const fileName = answers.input_name;
+    const tableName = answers.input_name;
     const empID = answers.ID_question;
     const department = answers.department_question
     const nameEmp = answers.employee_question;
@@ -89,7 +90,9 @@ inquirer.prompt(
     //     if (err) throw err;
     //     console.log('saved')
     // })
-    connection.query(`INSERT INTO empList(ID, Employee, Position, Department) VALUES (${empID},'${nameEmp}','${position}','${department}')`, (err,rows) => {
+
+    // this inputs the values submitted into the specific table entered
+    connection.query(`INSERT INTO ${tableName}(ID, Employee, Position, Department) VALUES (${empID},'${nameEmp}','${position}','${department}')`, (err,rows) => {
         if(err) {
             throw err
         }
@@ -99,3 +102,5 @@ inquirer.prompt(
         }
     })
 })
+
+// https://www.youtube.com/watch?v=SyaJSKklH0U&ab_channel=Arslan
