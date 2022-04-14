@@ -113,7 +113,7 @@ inquirer.prompt([
         })
     }
     else if (answers.options === 'add role') {
-        return connection.query(`INSERT INTO employees_data (id, emp_name, position, department) VALUES (${answers.ID_question}, '${answers.employee_question}', '${answers.role_question}', '${answers.department_question}')`, (err, res)=>{
+        return connection.query(`INSERT INTO employees_data (id, emp_name, position, department) VALUES ('${answers.ID_question}', '${answers.employee_question}', '${answers.role_question}', '${answers.department_question}')`, (err, res)=>{
             return console.log(res)
         })
     }
