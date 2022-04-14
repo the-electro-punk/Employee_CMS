@@ -1,15 +1,23 @@
+const fs = require('fs')
+const inquirer = require('inquirer');
+
 const express = require('express')
 const mysql = require('mysql')
+
 const app = express();
-var connection = require('./database.js')
 
-// const db = require('./database.js')
-
-app.get('/', function(req, res){
-    res.send('Hey there!');
+// this connects the JS code to the database
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'acme_company_database',
+    port: '3306',
 })
 
-app.listen(3305, function(){
-    console.log("app is listening on port 3305");
-
-});
+connection.connect(function(err){
+    if (err) {
+        return console.error('err: ' +err.message);
+        }
+        console.log('connected to Acme Database')
+})

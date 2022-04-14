@@ -15,8 +15,8 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
-    database: '',
-    port: '3306',
+    database: 'acme_company_database',
+    // port: '3300',
 })
 
 // connection.connect(function(err) {
