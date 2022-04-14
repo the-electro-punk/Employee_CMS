@@ -15,30 +15,43 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
-    database: 'Acme',
+    database: '',
     port: '3306',
 })
 
-// con.connect(function(err) {
+// connection.connect(function(err) {
 //     if (err) throw err;
 //     console.log("connected");
-//     con.query("Create Acme Database",
+//     connection.query("Create Gizmonic Database",
 //     function (err, result) {
 //         if (err) throw err;
 //         console.log("database created")
 //     })
 // })
+connection.connect(function(error){
+    if (error) throw error;
+    console.log("connected at " +connection.threadId+ "\n");
+    viewDept()
+})
+function viewDept() {
+    inquirer.prompt([
+        connection.query("SELECT * FROM employees", function(error, results){
+            console.log("results",results);
+            connection.end
+        })
+    ])
+}
 
-inquirer.prompt([
-    {
-        type: 'list',
-        name: 'options',
-        message: 'what would you like to do?',
-        choices: ['view all departments', 'view all roles', 'view all employees', 'add department', 'add role', 'add employee']
-    }
-]).then(answers => {
-    console.info('Answer:', answers.options);
-});
+// inquirer.prompt([
+//     {
+//         type: 'list',
+//         name: 'options',
+//         message: 'what would you like to do?',
+//         choices: ['view all departments', 'view all roles', 'view all employees', 'add department', 'add role', 'add employee', 'update employee role']
+//     }
+// ]).then(answers => {
+//     console.info('Answer:', answers.options);
+// });
 
 // router.get('/user-list',
 // function(req,res,next) {
