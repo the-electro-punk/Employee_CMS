@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
-    database: 'Gizmonic',
+    database: '',
     port: '3306',
 })
 
