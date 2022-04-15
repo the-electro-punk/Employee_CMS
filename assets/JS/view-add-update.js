@@ -167,7 +167,7 @@ inquirer.prompt([
             })
     }
     else if (answers.options === 'add department') {
-        return connection.query(`INSERT INTO departments (department, id) VALUES ('${answers.addDept}', "'${answers.addDeptID}'")`, (err, res)=>{
+        return connection.query(`INSERT INTO departments (department, id) VALUES ('${answers.addDept}', '${answers.addDeptID}')`, (err, res)=>{
             return console.log(res)
         })
     }
