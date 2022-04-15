@@ -46,8 +46,40 @@ inquirer.prompt([
     },
     {
         type: 'input',
-        name: 'addRole',
+        name: 'addDeptID',
+        message: 'department id?',
+        when (answers) {
+            return answers.options === 'add department'
+        }
+    },
+    {
+        type: 'input',
+        name: 'addRoleName',
         message: 'name of position?',
+        when (answers) {
+            return answers.options === 'add role'
+        }
+    },
+    {
+        type: 'input',
+        name: 'addRoleID',
+        message: 'position ID?',
+        when (answers) {
+            return answers.options === 'add role'
+        }
+    },
+    {
+        type: 'input',
+        name: 'addRoleDept',
+        message: 'position department?',
+        when (answers) {
+            return answers.options === 'add role'
+        }
+    },
+    {
+        type: 'input',
+        name: 'addRoleSalary',
+        message: 'position salary?',
         when (answers) {
             return answers.options === 'add role'
         }
@@ -77,23 +109,55 @@ inquirer.prompt([
         }
     },
     {
-    type:'input',
-    name: 'department_question',
-    message: 'which department?',
-    when (answers) {
-        return answers.options === 'add employee'
-    }
+        type:'input',
+        name: 'department_question',
+        message: 'which department?',
+        when (answers) {
+            return answers.options === 'add employee'
+        }
+    },
+    {
+        type:'input',
+        name: 'new_id',
+        message: 'New ID?',
+        when (answers) {
+            return answers.options === 'update employee role'
+        }
+    },
+    {
+        type:'input',
+        name: 'employee_name',
+        message: 'which employee?',
+        when (answers) {
+            return answers.options === 'update employee role'
+        }
+    },
+    {
+        type:'input',
+        name: 'new_position',
+        message: 'New Position?',
+        when (answers) {
+            return answers.options === 'update employee role'
+        }
+    },
+    {
+        type:'input',
+        name: 'new_department',
+        message: 'New Department?',
+        when (answers) {
+            return answers.options === 'update employee role'
+        }
     }
 
 ]).then(answers => {
     console.info('Answer:', answers.options);
     if (answers.options === 'view all departments') {
-        return connection.query('SELECT DISTINCT department FROM departments', (err, res)=>{
+        return connection.query('SELECT DISTINCT department, id FROM departments ORDER BY id', (err, res)=>{
             return console.log(res)
         })
     }
     else if (answers.options === 'view all roles') {
-            return connection.query('SELECT DISTINCT position FROM roles', (err, res)=>{
+            return connection.query('SELECT DISTINCT position, role_id, department, salary FROM roles ORDER BY role_id', (err, res)=>{
                 return console.log(res)
             })
     }
@@ -103,20 +167,26 @@ inquirer.prompt([
             })
     }
     else if (answers.options === 'add department') {
-        return connection.query(`INSERT INTO departments (department) VALUES ('${answers.addDept}')`, (err, res)=>{
+        return connection.query(`INSERT INTO departments (department, id) VALUES ('${answers.addDept}', "'${answers.addDeptID}'")`, (err, res)=>{
             return console.log(res)
         })
     }
     else if (answers.options === 'add role') {
-        return connection.query(`INSERT INTO roles (Position) VALUES ('${answers.addRole}')`, (err, res)=>{
+        return connection.query(`INSERT INTO roles (Position, role_id, department, salary) VALUES ('${answers.addRoleName}','${answers.addRoleID}','${answers.addRoleDept}','${answers.addRoleSalary}')`, (err, res)=>{
             return console.log(res)
         })
     }
-    else if (answers.options === 'add role') {
+    else if (answers.options === 'add employee') {
         return connection.query(`INSERT INTO employees_data (id, emp_name, position, department) VALUES ('${answers.ID_question}', '${answers.employee_question}', '${answers.role_question}', '${answers.department_question}')`, (err, res)=>{
             return console.log(res)
         })
     }
+    else if (answers.options === 'update employee role') {
+        return connection.query(`UPDATE employees_data SET id = '${answers.new_id}', position = '${answers.new_position}', department = '${answers.new_department}' WHERE emp_name = '${answers.employee_name}'`, (err, res)=>{
+            return console.log(res)
+        })
+    }
+    
 });
 
 // router.get('/user-list',
