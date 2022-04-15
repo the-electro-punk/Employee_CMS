@@ -6,7 +6,7 @@ This is a javascript code that takes data about an employee and submits it to a 
 
 # How to use the project
 
-Within the node-input.js file, open the command line and type "node node-input.js". This will open a list of questions asking the table name (in this case "emplist" from the Gizmonic database), employee ID, employee name, employee's job/position (IE: IT Specialist), and finally employee's department (IE: Human Resources). For this specific code, it is linked with a premade database located on my computer; as such, anyone wanting to use this code may need to create a database of their own and link the javascript file to it.
+Within the view-add-update.js file, open the command line and type "node view-add-update.js". This will open a list of options where you can either view all departments, roles, or employees of a company or add a department, role, or employee plus update an employee's position.
 
 # Credits
 
